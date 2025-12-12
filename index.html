@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="auto">
+<head>
+    <meta charset="utf-8" />
+    <title>PyScript + p5.js ラーニングワークスペース</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- PyScript (2025.11.2) -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2025.11.2/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2025.11.2/core.js"></script>
+
+    <py-config>
+        [[fetch]]
+        from = "./assets/python"
+        files = ["sketch.py"]
+    </py-config>
+
+    <!-- p5.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1/lib/p5.min.js"></script>
+
+    <!-- Monaco Editor -->
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.51.0/min/vs/loader.js"></script>
+
+    <!-- MathJax -->
+    <script>
+        window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+
+    <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+<body>
+    <header class="toolbar">
+        <div class="title">グラフで学ぶプログラミング</div>
+        <div class="toolbar-actions">
+            <button class="action" id="run-btn">実行</button>
+            <button class="action secondary" id="reset-btn">リセット</button>
+            <button class="action accent">先生を召喚する</button>
+            <button class="action secondary">プログラム履歴</button>
+            <button class="action secondary admin-only" id="user-btn">ユーザー管理</button>
+            <button class="action secondary">ログアウト</button>
+            <div class="pill-user" id="user-pill">ログイン中: student01</div>
+        </div>
+    </header>
+
+    <main class="workspace">
+        <section class="pane left" id="left-pane">
+            <div class="tabbar">
+                <button class="tab-button active" data-tab="design">デザイン表示</button>
+                <button class="tab-button" data-tab="lesson">教材</button>
+                <button class="tab-button" data-tab="list">教材一覧</button>
+            </div>
+            <div class="tab-content active" id="tab-design">
+                <div id="design-canvas"></div>
+            </div>
+            <div class="tab-content" id="tab-lesson">
+                <div class="lesson-header">
+                    <div class="lesson-title">Pythonでp5.jsを動かそう</div>
+                    <div class="lesson-nav">
+                        <button>前へ</button>
+                        <button>次へ</button>
+                    </div>
+                </div>
+                <div class="lesson-body">
+                    <p>マウス座標 <span>$(x, y)$</span> を取得して、キャンバス上に図形を描画します。背景は透明度を調整しながら塗りつぶすことでトレイル効果を作っています。</p>
+                    <p>擬似コード:</p>
+                    <pre>
+setup():
+    createCanvas()
+    background(20)
+
+draw():
+    fill(0, 0, 0, 24)
+    rect(0, 0, width, height)
+    fill(80, 180, 255)
+    circle(mouseX, mouseY, 32)
+                    </pre>
+                </div>
+            </div>
+            <div class="tab-content" id="tab-list">
+                <div class="lesson-list">
+                    <div class="lesson-card">
+                        <div>
+                            <div class="lesson-title">1. 座標と図形を理解する</div>
+                            <div class="meta">進捗: 50%</div>
+                        </div>
+                        <span class="badge progress">学習中</span>
+                    </div>
+                    <div class="lesson-card">
+                        <div>
+                            <div class="lesson-title">2. アニメーションの基礎</div>
+                            <div class="meta">進捗: 100%</div>
+                        </div>
+                        <span class="badge done">完了</span>
+                    </div>
+                    <div class="skeleton"></div>
+                </div>
+            </div>
+        </section>
+        <div class="splitter" id="v-splitter"></div>
+        <section class="pane right" id="right-pane">
+            <div class="controls">
+                <label for="font-size">フォントサイズ</label>
+                <input type="range" id="font-size" class="slider" min="12" max="22" step="1" value="15" />
+                <span id="font-size-label">15px</span>
+            </div>
+            <div class="right-body">
+                <div class="editor-wrapper" id="editor-wrapper">
+                    <div id="editor"></div>
+                </div>
+                <div class="h-splitter" id="h-splitter"></div>
+                <div class="log-card" id="log-card">
+                    <div class="log-header">
+                        <span>実行ログ</span>
+                        <span id="runtime" class="muted">-- ms</span>
+                    </div>
+                    <div class="log-body" id="log-body">初期化が完了しました。</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="py" src="./assets/python/sketch.py"></script>
+    <script src="./assets/js/app.js"></script>
+</body>
+</html>
